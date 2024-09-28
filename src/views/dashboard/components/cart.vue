@@ -9,7 +9,8 @@
     <div class="bottom-box">
       <div class="buttom">
         <div>
-          <a-button style="margin-right: 10px" @click="visible = true"
+          <!-- @click="visible = true"  // 整单取消不提示了-->
+          <a-button style="margin-right: 10px" @click="handleEmpty"
             >整单取消</a-button
           >
           <!-- <a-button @click="handlePending">挂单</a-button> -->

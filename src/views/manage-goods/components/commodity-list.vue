@@ -74,11 +74,13 @@
     try {
       setLoading(true);
       const { data } = await commodityList({
-        classifyId: classifyId.value,
+        type: keyword.value ? '3' : '1',
+        pages: 1,
+        classify: classifyId.value,
         keyword: keyword.value,
       });
 
-      list.value = data;
+      list.value = data.map((item) => ({ ...item, img: item.image }));
       if (keyword.value && list.value.length === 1) {
         handleGood(list.value[0]);
         console.log('直接加入购物车');
@@ -95,7 +97,7 @@
     return number;
   });
   watch([() => props.classifyId, () => props.keyword], ([newval1, newval2]) => {
-    classifyId.value = newval1;
+    classifyId.value = newval1 ? newval1 - 1 : 0;
     keyword.value = newval2;
     getCommodityList();
   });

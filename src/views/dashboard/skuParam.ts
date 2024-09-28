@@ -1,13 +1,3 @@
-/** +----------------------------------------------------------------------
- * | ADVC [ 基于Arco Design开箱即用的收银台前端/设计解决方案 ]
- * +----------------------------------------------------------------------
- * | Copyright (c) 2023~2023 dspurl All rights reserved.
- * +----------------------------------------------------------------------
- * | Licensed 未经许可不能去掉ADVC相关版权
- * +----------------------------------------------------------------------
- * | Author: dsPurl <383354826@qq.com>
- * +----------------------------------------------------------------------
- */
 import { CommoditySkuRecord } from '@/api/dashboard';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -106,6 +96,7 @@ export interface dataRecord {
   ids: string;
   number: number;
   product: any;
+  code: string;
 }
 export default function param2Data(productSkuData: any) {
   const specificationObj: any[] = [];
@@ -163,6 +154,7 @@ export default function param2Data(productSkuData: any) {
     ids: '',
     number: 0,
     product: [],
+    code: '',
   };
   let ids = '';
   // 默认值
@@ -182,6 +174,7 @@ export default function param2Data(productSkuData: any) {
         number: 0,
         ids,
         product: item.product,
+        code: item.code,
       };
     }
   });

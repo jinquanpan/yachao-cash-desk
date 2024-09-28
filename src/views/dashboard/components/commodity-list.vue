@@ -57,9 +57,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, inject, watch, computed } from 'vue';
+  import { ref, inject, watch, computed, onMounted, onUnmounted } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { thousands } from '@/utils';
+  import { thousands, oneEquipmentCode } from '@/utils';
   import { commodityList, CommodityRecord } from '@/api/dashboard';
   import CommoditySku from './commodity-sku.vue';
   import param2Data from '../skuParam';
@@ -81,6 +81,7 @@
   const keyword = ref();
   const list = ref<CommodityRecord[]>();
   const { loading, setLoading } = useLoading();
+
   function paramData(data: CommodityRecord) {
     return param2Data(data);
   }
@@ -101,17 +102,44 @@
       updateCart(skus);
     }
   };
+  // 获取扫码条形码添加商品
+  async function getScanCodeId(code: string) {
+    let item = list.value?.find((el) => el.code === code);
+    if (item) {
+      const skus = JSON.parse(JSON.stringify(item));
+      skus.number = 1;
+      updateCart(skus);
+    } else {
+      const { data } = await commodityList({
+        type: '2',
+        pages: 1,
+        code,
+      });
+      handleGood(data[0]);
+    }
+  }
+
+  const equipmentCodeFn = oneEquipmentCode(getScanCodeId);
+
+  onMounted(() => {
+    document.addEventListener('keypress', equipmentCodeFn);
+  });
+
+  onUnmounted(() => {
+    document.removeEventListener('keypress', equipmentCodeFn);
+  });
+
   async function getCommodityList() {
     try {
       setLoading(true);
+
       const { data } = await commodityList({
-        classifyId: classifyId.value,
+        type: keyword.value ? '3' : '1',
+        pages: 1,
+        classify: classifyId.value,
         keyword: keyword.value,
       });
-
-      console.log('data--------', data);
-
-      list.value = data;
+      list.value = data.map((item) => ({ ...item, img: item.image }));
       if (keyword.value && list.value.length === 1) {
         handleGood(list.value[0]);
         console.log('直接加入购物车');
@@ -142,7 +170,8 @@
     return number;
   });
   watch([() => props.classifyId, () => props.keyword], ([newval1, newval2]) => {
-    classifyId.value = newval1;
+    classifyId.value = newval1 ? newval1 - 1 : 0;
+
     keyword.value = newval2;
     getCommodityList();
   });

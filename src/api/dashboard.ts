@@ -1,13 +1,3 @@
-/** +----------------------------------------------------------------------
- * | ADVC [ 基于Arco Design开箱即用的收银台前端/设计解决方案 ]
- * +----------------------------------------------------------------------
- * | Copyright (c) 2023~2023 dspurl All rights reserved.
- * +----------------------------------------------------------------------
- * | Licensed 未经许可不能去掉ADVC相关版权
- * +----------------------------------------------------------------------
- * | Author: dsPurl <383354826@qq.com>
- * +----------------------------------------------------------------------
- */
 import axios from 'axios';
 
 export interface CommoditySkuProductRecord {
@@ -25,7 +15,7 @@ export interface CommodityRecord {
   id: number;
   name?: string;
   price: number;
-  img?: string;
+  image?: string;
   no?: string;
   number: number;
   inventory: number;
@@ -35,10 +25,21 @@ export interface CommodityRecord {
   productSkus?: any;
   ids?: string;
   product?: any;
+  code: string;
 }
 
-export function commodityList(params: { classifyId: number; keyword: string }) {
-  return axios.get<CommodityRecord[]>('/api/commodity/list', { params });
+export function commodityList(data: {
+  pages: number;
+  classify?: number;
+  keyword?: string;
+  type: string;
+  code?: string;
+}) {
+  // return axios.get<CommodityRecord[]>('/api/commodity/list', { params });
+  return axios.post<CommodityRecord[]>(
+    'http://localhost:5050/api/products',
+    data
+  );
 }
 
 export interface ClassifyRecord {
@@ -47,5 +48,5 @@ export interface ClassifyRecord {
 }
 
 export function classifyList() {
-  return axios.get<ClassifyRecord[]>('/api/classify/list');
+  return axios.get<ClassifyRecord[]>('http://localhost:5050/api/classify', {});
 }

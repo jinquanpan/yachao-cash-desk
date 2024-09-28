@@ -28,4 +28,30 @@ export const thousands = (num: string) => {
     .toFixed(2)
     .replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
 };
+
+// 获取监听的扫码设备拿到的条形码 外层监听的方法document.addEventListener('keypress', )
+export const oneEquipmentCode = (cb: any) => {
+  let time: any = null;
+  let str = '';
+
+  return (e: { key: string }) => {
+    const keyCode = e.key;
+
+    if (keyCode !== 'Enter') {
+      str += keyCode;
+    }
+    if (!time && keyCode !== 'Enter') {
+      time = setTimeout(() => {
+        time = null;
+        str = '';
+      }, 2000);
+    } else if (keyCode === 'Enter') {
+      if (str.length >= 6) {
+        cb(str);
+      }
+      str = '';
+    }
+  };
+};
+
 export default null;
