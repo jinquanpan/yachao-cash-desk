@@ -6,7 +6,6 @@
       :show-file-list="false"
       accept=".jpg, .jpeg, .png"
       @change="onChange"
-      @progress="onProgress"
     >
       <template #upload-button>
         <div
@@ -52,7 +51,7 @@
 
     <a-modal
       width="auto"
-      v-model:visible="model"
+      v-model="model"
       @beforeOk="cropperChange"
       @cancel="handleCancel"
       body-style="padding:0"
@@ -87,16 +86,16 @@
 
   const { eventHandlers } = useFormItem();
 
-  const model = ref(null);
+  const model: any = ref(null);
 
   const props = defineProps(['modelValue']);
   const emit = defineEmits(['update:modelValue']);
   const cropperRef = ref();
 
-  const cropperChange = (done) => {
+  const cropperChange = (done: any) => {
     const { coordinates, canvas } = cropperRef.value.getResult();
     // 获取blob对象
-    canvas.toBlob((blob) => {
+    canvas.toBlob((blob: any) => {
       // 转换为file 上传
       const file = new File([blob], model.value.name, {
         type: 'image/png',

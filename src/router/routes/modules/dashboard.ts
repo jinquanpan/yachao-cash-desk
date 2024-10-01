@@ -8,7 +8,7 @@ const DASHBOARD: AppRouteRecordRaw = {
   redirect: '/cashier',
   meta: {
     locale: 'menu.dashboard',
-    requiresAuth: true,
+    requiresAuth: false,
     hideChildrenInMenu: true,
     icon: 'icon-computer',
     order: 0,
@@ -20,7 +20,7 @@ const DASHBOARD: AppRouteRecordRaw = {
       component: () => import('@/views/dashboard/index.vue'),
       meta: {
         locale: 'menu.dashboard',
-        requiresAuth: true,
+        requiresAuth: false,
         roles: ['*'],
         activeMenu: 'Dashboard',
       },

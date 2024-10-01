@@ -32,12 +32,43 @@ export function login(data: LoginData) {
   });
 }
 
-export function logout() {
-  return axios.post<LoginRes>('/api/user/logout');
+export async function logout() {
+  // let res = await axios.post<LoginRes>('/api/user/logout');
+  // console.log('logout+++++', res);
+
+  return {
+    data: null,
+    status: 'ok',
+    msg: '请求成功',
+    code: 200,
+  };
 }
 
 export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
+  return {
+    data: {
+      name: '游客',
+      avatar:
+        'https://img1.baidu.com/it/u=2172391230,2457261248&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1727888400&t=ac5cabc2bf6beef646c9f2e0521cc29f',
+      email: '1961782297@email.com',
+      job: 'frontend',
+      jobName: '前端艺术家',
+      organization: 'Frontend',
+      organizationName: '前端',
+      location: 'shenzheng',
+      locationName: '深圳',
+      introduction: '人潇洒，性温存',
+      personalWebsite: '',
+      phone: '130****0000',
+      registrationDate: '2013-05-10 12:10:00',
+      accountId: '13005683936',
+      certification: 1,
+      role: 'admin',
+    },
+    status: 'ok',
+    msg: '请求成功',
+    code: 200,
+  };
 }
 
 export function getMenuList() {

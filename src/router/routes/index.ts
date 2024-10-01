@@ -14,6 +14,8 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
       : [defaultModule];
     result.push(...moduleList);
   });
+  console.log('_modules+++', _modules);
+
   return result;
 }
 

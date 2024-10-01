@@ -26,6 +26,7 @@ export interface CommodityRecord {
   ids?: string;
   product?: any;
   code: string;
+  img?: string;
 }
 
 export function commodityList(data: {
@@ -36,10 +37,7 @@ export function commodityList(data: {
   code?: string;
 }) {
   // return axios.get<CommodityRecord[]>('/api/commodity/list', { params });
-  return axios.post<CommodityRecord[]>(
-    'http://localhost:5050/api/products',
-    data
-  );
+  return axios.post<CommodityRecord[]>('/api/products', data);
 }
 
 export interface ClassifyRecord {
@@ -48,5 +46,5 @@ export interface ClassifyRecord {
 }
 
 export function classifyList() {
-  return axios.get<ClassifyRecord[]>('http://localhost:5050/api/classify', {});
+  return axios.get<ClassifyRecord[]>('/api/classify', {});
 }
