@@ -58,6 +58,7 @@
 
 <script lang="ts" setup>
   import { ref, inject, watch, computed, onMounted, onUnmounted } from 'vue';
+  import { Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { thousands, oneEquipmentCode } from '@/utils';
   import { commodityList, CommodityRecord } from '@/api/dashboard';
@@ -105,6 +106,7 @@
   // 获取扫码条形码添加商品
   async function getScanCodeId(code: string) {
     let item = list.value?.find((el) => el.code === code);
+
     if (item) {
       const skus = JSON.parse(JSON.stringify(item));
       skus.number = 1;
@@ -115,7 +117,15 @@
         pages: 1,
         code,
       });
-      handleGood(data[0]);
+      if (data.length) {
+        handleGood(data[0]);
+      } else {
+        Message.info({
+          content: '暂无此商品',
+          duration: 1000,
+        });
+      }
+      console.log('getScanCodeId++++', code);
     }
   }
 
