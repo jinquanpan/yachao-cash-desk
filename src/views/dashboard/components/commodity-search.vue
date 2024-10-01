@@ -22,7 +22,7 @@
     emit('keywordInput', value);
   }
   nextTick(() => {
-    keywordRef.value.focus();
+    // keywordRef.value.focus();
   });
 </script>
 
